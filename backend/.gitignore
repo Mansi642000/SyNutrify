@@ -1,0 +1,17 @@
+# Node / dev
+node_modules/
+package-lock.json
+package.json
+
+# Python envs / caches
+venv/
+__pycache__/
+*.pyc
+
+# Local DB and uploads
+data.db
+uploads/
+.env
+
+# logs
+*.log
