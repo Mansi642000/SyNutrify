@@ -1,11 +1,12 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  const [isAuth, setIsAuth] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,10 +16,26 @@ function Navbar() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:5000/auth/logout", {}, { withCredentials: true });
+    } catch (e) {
+      // ignore
+    }
+    setIsAuth(false);
     navigate("/login");
   };
+
+  useEffect(() => {
+    let mounted = true;
+    axios
+      .get("http://localhost:5000/auth/me", { withCredentials: true })
+      .then(() => mounted && setIsAuth(true))
+      .catch(() => mounted && setIsAuth(false));
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <nav className="bg-gray-800 p-4 flex justify-between items-center shadow-md">
@@ -46,7 +63,7 @@ function Navbar() {
           About
         </Link>
 
-        {token ? (
+        {isAuth ? (
           <>
             <Link to="/dashboard" className="hover:text-green-300">
               Dashboard

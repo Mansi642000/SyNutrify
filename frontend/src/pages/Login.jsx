@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -10,8 +10,12 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/auth/login", { email, password });
-      localStorage.setItem("token", res.data.token); // save token
+      const res = await axios.post(
+        "http://localhost:5000/auth/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      // server sets httpOnly cookie; don't store token in localStorage
       navigate("/dashboard"); // go to dashboard
     } catch (err) {
       alert("Invalid credentials ❌");
@@ -51,5 +55,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;

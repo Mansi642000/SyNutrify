@@ -3,4 +3,10 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      "/recipes": "http://localhost:5000",
+      "/auth": "http://localhost:5000",
+    },
+  },
 })

@@ -7,8 +7,10 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import RecipeDetails from "./pages/RecipeDetails";
-
 import RecipeSearch from "./pages/RecipeSearch";
+import NutritionChecker from "./pages/NutritionChecker";
+import AddRecipes from "./pages/AddRecipes";
+
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -30,6 +32,10 @@ function App() {
             path="/dashboard"
             element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />}
           />
+          <Route
+            path="/addrecipe"
+            element={isAuthenticated ? <AddRecipes /> : <Navigate to="/login" />}
+          />
 
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
@@ -37,6 +43,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/recipe/:id" element={<RecipeDetails />} />
           <Route path="/recipesearch" element={<RecipeSearch />} />
+          <Route path="/nutrition" element={<NutritionChecker />} />
+          <Route path="/addrecipe" element={<AddRecipes />} />
         </Routes>
       </main>
 
@@ -44,5 +52,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

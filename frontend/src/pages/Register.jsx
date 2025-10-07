@@ -18,7 +18,6 @@ function Register() {
       alert("Error: " + err.response.data.message);
     }
   };
-
   return (
     <div className="flex h-screen items-center justify-center bg-gray-900 text-white">
       <form onSubmit={handleRegister} className="bg-gray-800 p-6 rounded-2xl shadow-lg w-96">
